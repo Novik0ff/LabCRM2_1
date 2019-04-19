@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CrmLeadImport.Context;
 
 namespace CrmLeadImport.ExceptionHandler
 {
@@ -11,7 +9,8 @@ namespace CrmLeadImport.ExceptionHandler
     {
         public static void AddUnhandledExceptionHandler()
         {
-            AppDomain.CurrentDomain.UnhandledException += (o, e) => {
+            AppDomain.CurrentDomain.UnhandledException += (o, e) =>
+            {
                 Console.Error.WriteLine(((Exception)e.ExceptionObject).Message.ToString());
                 Console.ReadKey();
             };
@@ -20,6 +19,12 @@ namespace CrmLeadImport.ExceptionHandler
         {
             if (!File.Exists(path))
                 throw new ArgumentException($@"Input file doesnsot exists");
+        }
+
+        public static void CheckList(List<LeadContext> leads)
+        {
+            if (!(leads.Count > 0))
+                throw new ArgumentException($@"List empty");
         }
     }
 }
