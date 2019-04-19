@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CrmLeadImport.ExceptionHandler
+{
+    public class ExceptionHandler
+    {
+        public static void AddUnhandledExceptionHandler()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (o, e) => {
+                Console.Error.WriteLine(((Exception)e.ExceptionObject).Message.ToString());
+                Console.ReadKey();
+            };
+        }
+        public static void OpenFile(string path)
+        {
+            if (!File.Exists(path))
+                throw new ArgumentException($@"Input file doesnsot exists");
+        }
+    }
+}
